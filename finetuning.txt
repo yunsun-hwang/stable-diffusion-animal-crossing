@@ -1,0 +1,21 @@
+# The finetuning requires transformers 4.22.0
+tf_version=`pip show transformers | grep Version: | cut -d ' ' -f2`
+if [[ $tf_version == "4.15.0" ]]; then
+    pip uninstall -y transformers && pip install transformers==4.22.0
+fi
+NAME_MODEL_REPOSITORY=TODO
+NAME_DATASET_REPOSITORY=TODO
+USERNAME=TODO
+MODEL_PRETRAINED=CompVis/stable-diffusion-v1-4
+python train_text_to_image.py \
+    --dataset_name "datasets/${NAME_DATASET_REPOSITORY}" --pretrained_model_name_or_path "${MODEL_PRETRAINED}" \
+    --center_crop --random_flip \
+    --gradient_accumulation_steps=8 --max_grad_norm=1 \
+    --resolution 512 \
+    --mixed_precision fp16 \
+    --learning_rate=1e-05 \
+    --train_batch_size 1 \
+    --num_train_epochs 1500 \
+    --upload_every_epoch 5 --dataset_from_disk \
+    --lr_scheduler="constant" --lr_warmup_steps=0 --push_to_hub \
+    --output_dir "${NAME_MODEL_REPOSITORY}"

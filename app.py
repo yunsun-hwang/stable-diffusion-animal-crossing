@@ -115,19 +115,64 @@ block = gr.Blocks(css=css)
 
 examples = [
     [
-        'Yoda',
+        'unicorn',
         2,
-        7.5,
+        6.5,
     ],
     [
-        'Abraham Lincoln',
+        'a cat wearing a blue shirt',
         2,
-        7.5,
+        6.5,
     ],
     [
-        'George Washington',
+        'angry bird',
+        2,
+        6.5,
+    ],
+    [
+        'a pretty pig',
+        2,
+        6.5,
+    ],
+    [
+        'robot',
+        2,
+        6.5,
+    ],
+    [
+        'a rabbit wearing glasses',
+        2,
+        5.1,
+    ],
+    [
+        'dragon',
+        2,
+        8.5,
+    ],
+    [
+        'teddybear',
         2,
         7,
+    ],
+    [
+        'spider man',
+        2,
+        8.5,
+    ],
+    [
+        'a doctor dog',
+        2,
+        6,
+    ],
+    [
+        'a police rabbit',
+        2,
+        6,
+    ],
+    [
+        'a rainbow cat',
+        2,
+        6,
     ],
 ]
 
@@ -136,13 +181,13 @@ with block:
         """
             <div style="text-align: center; max-width: 650px; margin: 0 auto;">
               <div>
-                <h1 style="font-weight: 900; font-size: 3rem;">
-                  One piece text to image
+                <h1 style="font-weight: 900; font-size: 3rem; padding-top: 10px; margin-top: 10px">
+                  Animal Crossing text to image
                 </h1>
               </div>
-              <p style="margin-bottom: 10px; font-size: 94%">
-              Generate new one piece character from a text description,
-                <a href=>created by YaYaB</a>.
+              <p style="margin-bottom: 10px; font-size: 94%; margin-top: 10px">
+              Generate new animal crossing character from a text description,
+                <a href=>created by dain and yunsun</a>.
               </p>
             </div>
         """
@@ -193,4 +238,4 @@ with block:
            """
         )
 
-block.launch()
+block.launch(share=True)

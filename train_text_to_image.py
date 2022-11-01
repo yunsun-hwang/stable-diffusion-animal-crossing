@@ -3,6 +3,7 @@ import copy
 import logging
 import math
 import os
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
 import random
 from pathlib import Path
 from typing import Optional
@@ -23,7 +24,7 @@ from diffusers.pipelines.stable_diffusion import StableDiffusionSafetyChecker
 from huggingface_hub import HfFolder, Repository, whoami
 from torchvision import transforms
 from tqdm.auto import tqdm
-from transformers import CLIPFeatureExtractor, CLIPTextModel, CLIPTokenizer
+from transformers import CLIPFeatureExtractor, CLIPTextModel, CLIPTokenizer, AutoTokenizer
 
 logger = get_logger(__name__)
 
@@ -301,7 +302,6 @@ class EMAModel:
 def main():
     args = parse_args()
     logging_dir = os.path.join(args.output_dir, args.logging_dir)
-
     accelerator = Accelerator(
         gradient_accumulation_steps=args.gradient_accumulation_steps,
         mixed_precision=args.mixed_precision,
@@ -341,7 +341,8 @@ def main():
             os.makedirs(args.output_dir, exist_ok=True)
 
     # Load models and create wrapper for stable diffusion
-    tokenizer = CLIPTokenizer.from_pretrained(args.pretrained_model_name_or_path, subfolder="tokenizer")
+    tokenizer = CLIPTokenizer.from_pretrained(args.pretrained_model_name_or_path, subfolder="tokenizer", local_files_only=False)
+    # tokenizer = AutoTokenizer.from_pretrained(args.pretrained_model_name_or_path, local_files_only=False)
     text_encoder = CLIPTextModel.from_pretrained(args.pretrained_model_name_or_path, subfolder="text_encoder")
     vae = AutoencoderKL.from_pretrained(args.pretrained_model_name_or_path, subfolder="vae")
     unet = UNet2DConditionModel.from_pretrained(args.pretrained_model_name_or_path, subfolder="unet")
